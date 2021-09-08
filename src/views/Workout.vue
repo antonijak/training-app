@@ -162,8 +162,7 @@ export default {
         font-size: 5rem;
         background-color: rgba(10, 145, 75, 0.5);
         z-index: 1;
-        transition: all .2s linear;
-    
+        transition: all 0.2s linear;
       }
 
       .set,
@@ -196,7 +195,7 @@ export default {
             top: 0;
           }
 
-          &:checked:before{
+          &:checked:before {
             border-color: rgb(13, 99, 40);
           }
 

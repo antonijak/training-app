@@ -37,14 +37,13 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
- 
-   overflow: hidden;
 
+  overflow: hidden;
 
   time {
-      color: rgb(65, 65, 71);
-      text-align: center;
-      margin-bottom: 3rem;
+    color: rgb(65, 65, 71);
+    text-align: center;
+    margin-bottom: 3rem;
   }
 
   .workouts {
@@ -57,26 +56,26 @@ export default {
     .workout {
       list-style: none;
       text-decoration: none;
-      padding: 1.5rem ;
+      padding: 1.5rem;
       width: 100%;
       text-align: left;
       font-weight: 500;
       color: white;
       font-size: 1.1rem;
       background-color: rgb(21, 21, 22);
-     margin-bottom: 1px;
-     height: 4.5rem;
+      margin-bottom: 1px;
+      height: 4.5rem;
 
       &:hover {
         cursor: pointer;
       }
 
       &:active {
-          background: gray;
+        background: gray;
       }
 
       .icon {
-          font-size: 1.25rem;
+        font-size: 1.25rem;
         margin-right: 1.5rem;
       }
     }

@@ -23,12 +23,11 @@ export default {
   margin: 0;
   box-sizing: border-box;
 }
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap");
 
 #app {
   font-family: Open Sans, Arial, sans-serif;
- 
+
   color: white;
   margin: 0;
   background-color: rgb(35, 35, 39);
@@ -38,11 +37,10 @@ export default {
   main {
     min-height: calc(100vh - 4rem);
 
-
-  .heading {
-    padding: 1.5rem;
-     text-align: center;
-  }
+    .heading {
+      padding: 1.5rem;
+      text-align: center;
+    }
   }
 }
 </style>
