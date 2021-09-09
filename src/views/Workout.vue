@@ -19,10 +19,26 @@
         <img class="image" :src="step.img" />
 
         <!-------------------------- R E P S -------------------------->
-        <div class="reps">
+        <div v-if="step.set.rep" class="reps">
           <label v-for="index in step.set.req" :key="index + 'req'" class="set">
             {{ step.set.rep }}
             <input type="checkbox" @click="startBreak(step)" />
+          </label>
+
+          <label
+            v-for="index in step.set.opt"
+            :key="index + 'opt'"
+            class="set-opt"
+          >
+            {{ step.set.rep }}
+            <input type="checkbox" @click="startBreak(step)" />
+          </label>
+        </div>
+
+        <div v-else class="reps">
+          <label :key="index + 'req'" class="set">
+            {{ step.set.time }}
+            <input type="checkbox" />
           </label>
 
           <label
@@ -50,7 +66,8 @@ import glute from "../assets/hip-thrust.png";
 import lunge from "../assets/lunge.gif";
 import legCurl from "../assets/leg-curl.png";
 import stair from "../assets/stair.png";
-import treadmill from "../assets/treadmill-10.webp"
+import treadmill from "../assets/treadmill-10.webp";
+import roll from "../assets/roll.png";
 
 export default {
   name: "Workout",
@@ -114,22 +131,33 @@ export default {
           set: {
             req: 1,
             opt: null,
-            rep: "10min",
+            time: "10min",
           },
           weight: null,
           break: null,
-          img: stair
+          img: stair,
         },
         {
           title: "Treadmill",
           set: {
             req: 1,
             opt: null,
-            rep: "15min",
+            time: "15min",
           },
           weight: null,
           break: null,
-          img: treadmill
+          img: treadmill,
+        },
+        {
+          title: "Roll machine or stretch",
+          set: {
+            req: 1,
+            opt: null,
+            time: "15min",
+          },
+          weight: null,
+          break: null,
+          img: roll,
         },
       ],
       workout: null,
@@ -178,7 +206,7 @@ export default {
       }
 
       .title {
-           width: 100%;
+        width: 100%;
         margin-bottom: 0.75rem;
         display: flex;
         justify-content: space-between;
