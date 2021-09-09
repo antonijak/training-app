@@ -9,23 +9,31 @@
           {{ step.title }}
         </h3>
 
-        <h4 class="time">
+        <!-------------------------- B R E A K -------------------------->
+        <h4 v-if="step.break" class="break">
           Break
           <span><i :class="'icon fas fa-clock'"></i> {{ step.break }} sec</span>
         </h4>
 
-        <!-------------------------- R E P S -------------------------->
-        <label v-for="index in step.set.req" :key="index + 'req'" class="set">
-          {{ step.set.rep }} <input type="checkbox" @click="startBreak(step)" />
-        </label>
+        <!-------------------------- I M A G E -------------------------->
+        <img class="image" :src="step.img" />
 
-        <label
-          v-for="index in step.set.opt"
-          :key="index + 'opt'"
-          class="set-opt"
-        >
-          {{ step.set.rep }} <input type="checkbox" @click="startBreak(step)" />
-        </label>
+        <!-------------------------- R E P S -------------------------->
+        <div class="reps">
+          <label v-for="index in step.set.req" :key="index + 'req'" class="set">
+            {{ step.set.rep }}
+            <input type="checkbox" @click="startBreak(step)" />
+          </label>
+
+          <label
+            v-for="index in step.set.opt"
+            :key="index + 'opt'"
+            class="set-opt"
+          >
+            {{ step.set.rep }}
+            <input type="checkbox" @click="startBreak(step)" />
+          </label>
+        </div>
 
         <!-------------------------- T I M E R -------------------------->
         <div v-if="visibleTimer === step.title" class="timer">
@@ -37,6 +45,13 @@
 </template>
 
 <script>
+import squat from "../assets/squat.jpeg";
+import glute from "../assets/hip-thrust.png";
+import lunge from "../assets/lunge.gif";
+import legCurl from "../assets/leg-curl.png";
+import stair from "../assets/stair.png";
+import treadmill from "../assets/treadmill-10.webp"
+
 export default {
   name: "Workout",
   created() {
@@ -58,26 +73,63 @@ export default {
             rep: 8,
           },
           weight: 0,
-          break: 60,
+          break: 90,
+          img: squat,
         },
         {
           title: "Hip thrusts",
           set: {
             req: 3,
             opt: 1,
-            rep: 8,
+            rep: 12,
           },
-          weight: 0,
-          break: 60,
+          weight: 7.5,
+          break: 90,
+          img: glute,
         },
         {
-          title: "Hack squat2",
+          title: "Lunges",
           set: {
             req: 3,
-            opt: 1,
-            rep: 8,
+            opt: 0,
+            rep: 10,
           },
           weight: 0,
+          break: 90,
+          img: lunge,
+        },
+        {
+          title: "Seated leg curls",
+          set: {
+            req: 3,
+            opt: 0,
+            rep: 12,
+          },
+          weight: 25,
+          break: 90,
+          img: legCurl,
+        },
+        {
+          title: "Stair master",
+          set: {
+            req: 1,
+            opt: null,
+            rep: "10min",
+          },
+          weight: null,
+          break: null,
+          img: stair
+        },
+        {
+          title: "Treadmill",
+          set: {
+            req: 1,
+            opt: null,
+            rep: "15min",
+          },
+          weight: null,
+          break: null,
+          img: treadmill
         },
       ],
       workout: null,
@@ -108,6 +160,7 @@ export default {
   .wo {
     padding: 0;
     color: white;
+    margin-bottom: 4.5rem;
 
     .step {
       list-style: none;
@@ -115,37 +168,46 @@ export default {
       padding-bottom: 3rem;
       background-color: rgb(52, 52, 58);
       position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
 
       &:nth-child(even) {
         background-color: transparent;
-
-        .time {
-          color: rgb(54, 52, 55);
-        }
       }
 
       .title {
+           width: 100%;
         margin-bottom: 0.75rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
 
-      .time {
+      .break {
+        width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-weight: normal;
         font-size: 0.9rem;
         margin-bottom: 1.5rem;
-        border: 1px solid rgb(56, 56, 62);
-        padding: 0.25rem 0.5rem;
-        color: rgb(32, 32, 34);
+        //  border: 1px solid rgb(194, 195, 201);
+        padding: 0.25rem 0;
+        color: rgb(194, 195, 201);
         border-radius: 3px;
 
         .icon {
           margin-right: 0.25rem;
         }
+      }
+
+      .image {
+        width: 60%;
+        height: 10.1rem;
+        object-fit: cover;
+        opacity: 0.7;
       }
 
       .timer {

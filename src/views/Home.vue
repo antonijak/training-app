@@ -31,14 +31,12 @@ export default {
 
 <style scoped lang="scss">
 .home {
-  height: 100%;
-  max-height: 100%;
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   overflow: hidden;
+  margin-bottom: 4.5rem;
 
   time {
     color: rgb(65, 65, 71);
