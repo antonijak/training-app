@@ -15,7 +15,7 @@
           </h3>
         </div>
 
-        <div class="step__details">
+        <div v-if="step.break || step.weight" class="step__details">
           <!-------------------------- B R E A K -------------------------->
           <div v-if="step.break" class="break">
             <i :class="'icon far fa-pause-circle'"></i> {{ step.break }} sec
@@ -237,8 +237,7 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
-        padding: 1.5rem;
-        padding-top: 0.75rem;
+        padding:  0.75rem 1rem 0;
 
         .title {
           width: fit-content;
@@ -256,7 +255,7 @@ export default {
         margin-bottom: .75rem;
         color: rgb(194, 195, 201);
         font-size: 0.9rem;
-        padding: 0.25rem 1.5rem;
+        padding: 0.25rem 1rem 0;
         font-weight: normal;
 
         .break {
@@ -299,18 +298,17 @@ export default {
 
       .reps {
         width: 100%;
-        margin: 0 1.5rem;
-        border-top: 1px solid gray;
-        padding-top: 1rem;
+        margin: 0 1rem 0;
+        border-top: 1px solid rgb(80, 78, 84);
+
       }
 
       .set,
       .set-opt {
         display: flex;
-        height: 2rem;
         justify-content: flex-end;
         align-items: center;
-        padding: 1.5rem 0;
+        margin-top: 1.5rem;
         font-weight: 500;
         font-size: 1.1rem;
         width: 100%;
