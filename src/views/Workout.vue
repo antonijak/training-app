@@ -28,11 +28,12 @@
         </div>
 
         <!-------------------------- R E P S -------------------------->
-        <div v-if="step.set.rep" class="reps">
+        <div v-if="step.set.rep" class="step__reps">
           <label v-for="index in step.set.req" :key="index + 'req'" class="set">
-            <p class="number">{{ step.set.rep }}</p>
+            <p v-if="step.set.rep > 1" class="number">{{ step.set.rep }}</p>
+            <p v-else class="number">{{ step.set.time }}</p>
 
-            <input type="checkbox" @click="startBreak(step)" />
+            <input type="checkbox" @click="(e) => startBreak(e, step, index)" />
           </label>
 
           <label
@@ -40,14 +41,18 @@
             :key="index + 'opt'"
             class="set-opt"
           >
-            <p class="number">{{ step.set.rep }}</p>
+            <p v-if="step.set.rep > 1" class="number">{{ step.set.rep }}</p>
+            <p v-else class="number">{{ step.set.time }}</p>
 
-            <input type="checkbox" @click="startBreak(step)" />
+            <input
+              type="checkbox"
+              @click="(e) => startBreak(e, step, step.set.req + index)"
+            />
           </label>
         </div>
 
-        <div v-else class="reps">
-          <label :key="index + 'req'" class="set">
+        <div v-else class="step__reps">
+          <label class="set">
             {{ step.set.time }}
             <input type="checkbox" />
           </label>
@@ -79,6 +84,11 @@ import legCurl from "../assets/leg-curl.png";
 import stair from "../assets/stair.png";
 import treadmill from "../assets/treadmill-10.webp";
 import roll from "../assets/roll.png";
+import chestpr from "../assets/chestpr.jpeg";
+import row from "../assets/row.jpeg";
+import plank from "../assets/plank.jpeg";
+import backex from "../assets/backex.jpeg";
+import shoulder from "../assets/shoulder.png";
 
 export default {
   name: "Workout",
@@ -90,6 +100,7 @@ export default {
     return {
       interval: null,
       visibleTimer: "",
+      set: null,
       time: 0,
       type: "legs",
       legs: [
@@ -171,16 +182,106 @@ export default {
           img: roll,
         },
       ],
+      ub: [
+        {
+          title: "Chest press (or bench press 5kg)",
+          set: {
+            req: 4,
+            opt: 0,
+            rep: 8,
+          },
+          weight: 20,
+          break: 90,
+          img: chestpr,
+        },
+        {
+          title: "Seated row",
+          set: {
+            req: 4,
+            opt: 0,
+            rep: 10,
+          },
+          weight: 20,
+          break: 90,
+          img: row,
+        },
+        {
+          title: "Plank",
+          set: {
+            req: 4,
+            opt: null,
+            time: "30sec",
+            rep: 1
+          },
+          weight: null,
+          break: 90,
+          img: plank,
+        },
+        {
+          title: "Back extension",
+          set: {
+            req: 3,
+            opt: 0,
+            rep: 6,
+          },
+          weight: null,
+          break: 90,
+          img: backex,
+        },
+        {
+          title: "Shoulder press",
+          set: {
+            req: 3,
+            opt: null,
+            rep: 8
+          },
+          weight: 'bar 15',
+          break: 90,
+          img: shoulder,
+        },
+        {
+          title: "Treadmill",
+          set: {
+            req: 1,
+            opt: null,
+            time: "15min",
+          },
+          weight: null,
+          break: null,
+          img: treadmill,
+        },
+        {
+          title: "Roll machine or stretch",
+          set: {
+            req: 1,
+            opt: null,
+            time: "15min",
+          },
+          weight: null,
+          break: null,
+          img: roll,
+        },
+      ],
       workout: null,
     };
   },
   methods: {
-    startBreak(step) {
-      this.visibleTimer = step.title;
-      this.time = step.break;
-
-      clearInterval(this.interval);
-      this.interval = setInterval(this.runTime, 1000);
+    startBreak(event, step, set) {
+      if (
+        !event.target.checked &&
+        this.visibleTimer === step.title &&
+        this.set === set
+      ) {
+        clearInterval(this.interval);
+        this.visibleTimer = "";
+        this.set = null;
+      } else {
+        clearInterval(this.interval);
+        this.time = step.break;
+        this.visibleTimer = step.title;
+        this.set = set;
+        this.interval = setInterval(this.runTime, 1000);
+      }
     },
     runTime() {
       this.time--;
@@ -196,7 +297,7 @@ export default {
 
 <style scoped lang="scss">
 .workout {
-    margin-bottom: 5rem;
+  margin-bottom: 5rem;
 
   .heading {
     text-transform: uppercase;
@@ -209,7 +310,6 @@ export default {
   .wo {
     padding: 0;
     color: white;
-    
 
     .step {
       list-style: none;
@@ -220,9 +320,9 @@ export default {
       align-items: center;
       overflow: hidden;
       margin: 1.5rem;
-      border-radius: 12px;
+      border-radius: 10px;
       background-color: rgb(60, 58, 65);
-      padding-bottom: 1.5rem;
+      padding-bottom: 1rem;
 
       .image {
         width: 100%;
@@ -237,7 +337,7 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
-        padding:  0.75rem 1rem 0;
+        padding: 0.75rem 1rem 0;
 
         .title {
           width: fit-content;
@@ -252,7 +352,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: .75rem;
+        margin-bottom: 1rem;
         color: rgb(194, 195, 201);
         font-size: 0.9rem;
         padding: 0.25rem 1rem 0;
@@ -296,72 +396,80 @@ export default {
         transition: all 0.2s linear;
       }
 
-      .reps {
+      &__reps {
         width: 100%;
         margin: 0 1rem 0;
-        border-top: 1px solid rgb(80, 78, 84);
+        //   border-top: 1px solid rgb(80, 78, 84);
+        background-color: rgb(66, 64, 72);
+        border-radius: 10px;
+        padding: 1.5rem 1rem;
 
-      }
+        .set,
+        .set-opt {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          margin-top: 1.5rem;
+          font-weight: 500;
+          font-size: 1.1rem;
+          width: 100%;
 
-      .set,
-      .set-opt {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        margin-top: 1.5rem;
-        font-weight: 500;
-        font-size: 1.1rem;
-        width: 100%;
+          &:first-child {
+            margin-top: 0;
+          }
 
-        .number {
+          .number {
             display: block;
             height: 1.5rem;
+          }
+
+          input {
+            margin-left: 0.75rem;
+            visibility: hidden;
+            position: relative;
+            overflow: hidden;
+            height: 1.25rem;
+            width: 1.25rem;
+
+            &:before {
+              visibility: visible;
+              content: "";
+              height: 1rem;
+              width: 1rem;
+              // border: 1px solid white;
+              background-color: white;
+              position: absolute;
+              left: 0;
+              top: 0;
+              border-radius: 3px;
+            }
+
+            &:checked:before {
+              border-color: rgb(13, 99, 40);
+            }
+
+            &:checked:after {
+              visibility: visible;
+              content: "\2715";
+              height: 1rem;
+              width: 1rem;
+              position: absolute;
+              left: 0;
+              background-color: rgb(13, 99, 40);
+              color: white;
+              font-size: 1rem;
+              line-height: 1rem;
+              display: block;
+              top: 0;
+              text-align: center;
+              border-radius: 3px;
+            }
+          }
         }
 
-        input {
-          margin-left: 0.75rem;
-          visibility: hidden;
-          position: relative;
-          overflow: hidden;
-          height: 1.25rem;
-          width: 1.25rem;
-
-          &:before {
-            visibility: visible;
-            content: "";
-            height: 1rem;
-            width: 1rem;
-            border: 1px solid white;
-            position: absolute;
-            left: 0;
-            top: 0;
-            border-radius: 3px;
-          }
-
-          &:checked:before {
-            border-color: rgb(13, 99, 40);
-          }
-
-          &:checked:after {
-            visibility: visible;
-            content: "\2715";
-            height: 1rem;
-            width: 1rem;
-            position: absolute;
-            left: 1px;
-            background-color: rgb(13, 99, 40);
-            color: white;
-            font-size: 1rem;
-            line-height: 0.9rem;
-            display: block;
-            top: 1px;
-            text-align: center;
-          }
+        .set-opt {
+          color: gray;
         }
-      }
-
-      .set-opt {
-        color: gray;
       }
     }
   }
