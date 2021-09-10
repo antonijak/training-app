@@ -24,9 +24,10 @@ export default {
   box-sizing: border-box;
 }
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100;400;500;700&display=swap');
 
 #app {
-  font-family: Open Sans, Arial, sans-serif;
+  font-family: Urbanist, Open Sans, Arial, sans-serif;
 
   color: white;
   margin: 0;

@@ -5,23 +5,33 @@
     <ul class="wo">
       <!-------------------------- S T E P -------------------------->
       <li v-for="step in workout" :key="step.title" class="step">
-        <h3 class="title">
-          {{ step.title }}
-        </h3>
-
-        <!-------------------------- B R E A K -------------------------->
-        <h4 v-if="step.break" class="break">
-          Break
-          <span><i :class="'icon fas fa-clock'"></i> {{ step.break }} sec</span>
-        </h4>
-
         <!-------------------------- I M A G E -------------------------->
         <img class="image" :src="step.img" />
+
+        <!-------------------------- T I T L E -------------------------->
+        <div class="step__heading">
+          <h3 class="title">
+            {{ step.title }}
+          </h3>
+        </div>
+
+        <div class="step__details">
+          <!-------------------------- B R E A K -------------------------->
+          <div v-if="step.break" class="break">
+            <i :class="'icon far fa-pause-circle'"></i> {{ step.break }} sec
+          </div>
+
+          <!-------------------------- W E I G H T -------------------------->
+          <div v-if="step.weight" class="weight">
+            <i :class="'icon fas fa-weight-hanging'"></i> {{ step.weight }} kg
+          </div>
+        </div>
 
         <!-------------------------- R E P S -------------------------->
         <div v-if="step.set.rep" class="reps">
           <label v-for="index in step.set.req" :key="index + 'req'" class="set">
-            {{ step.set.rep }}
+            <p class="number">{{ step.set.rep }}</p>
+
             <input type="checkbox" @click="startBreak(step)" />
           </label>
 
@@ -30,7 +40,8 @@
             :key="index + 'opt'"
             class="set-opt"
           >
-            {{ step.set.rep }}
+            <p class="number">{{ step.set.rep }}</p>
+
             <input type="checkbox" @click="startBreak(step)" />
           </label>
         </div>
@@ -89,7 +100,7 @@ export default {
             opt: 1,
             rep: 8,
           },
-          weight: 0,
+          weight: 1,
           break: 90,
           img: squat,
         },
@@ -185,57 +196,88 @@ export default {
 
 <style scoped lang="scss">
 .workout {
+    margin-bottom: 5rem;
+
+  .heading {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: -1.5rem;
+  }
+
   .wo {
     padding: 0;
     color: white;
-    margin-bottom: 4.5rem;
+    
 
     .step {
       list-style: none;
-      padding: 1.5rem;
-      padding-bottom: 3rem;
-      background-color: rgb(52, 52, 58);
       position: relative;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
+      overflow: hidden;
+      margin: 1.5rem;
+      border-radius: 12px;
+      background-color: rgb(60, 58, 65);
+      padding-bottom: 1.5rem;
 
-      &:nth-child(even) {
-        background-color: transparent;
+      .image {
+        width: 100%;
+        height: 10.1rem;
+        object-fit: cover;
+        opacity: 0.7;
+        background-color: rgb(37, 37, 40);
       }
 
-      .title {
+      &__heading {
         width: 100%;
-        margin-bottom: 0.75rem;
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-end;
+        padding: 1.5rem;
+        padding-top: 0.75rem;
+
+        .title {
+          width: fit-content;
+          font-size: 1.75rem;
+          font-family: Urbanist, sans-serif;
+          font-weight: 500;
+        }
       }
 
-      .break {
+      &__details {
         width: 100%;
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        font-weight: normal;
-        font-size: 0.9rem;
-        margin-bottom: 1.5rem;
-        //  border: 1px solid rgb(194, 195, 201);
-        padding: 0.25rem 0;
+        justify-content: space-between;
+        margin-bottom: .75rem;
         color: rgb(194, 195, 201);
-        border-radius: 3px;
+        font-size: 0.9rem;
+        padding: 0.25rem 1.5rem;
+        font-weight: normal;
+
+        .break {
+          width: fit-content;
+          margin-right: 1.5rem;
+        }
+
+        .weight {
+          display: flex;
+          width: fit-content;
+          align-items: center;
+
+          .icon {
+            font-size: 0.8rem;
+            margin-right: 0.3rem;
+          }
+        }
 
         .icon {
           margin-right: 0.25rem;
         }
-      }
-
-      .image {
-        width: 60%;
-        height: 10.1rem;
-        object-fit: cover;
-        opacity: 0.7;
       }
 
       .timer {
@@ -255,6 +297,13 @@ export default {
         transition: all 0.2s linear;
       }
 
+      .reps {
+        width: 100%;
+        margin: 0 1.5rem;
+        border-top: 1px solid gray;
+        padding-top: 1rem;
+      }
+
       .set,
       .set-opt {
         display: flex;
@@ -262,9 +311,14 @@ export default {
         justify-content: flex-end;
         align-items: center;
         padding: 1.5rem 0;
-        width: 100%;
-        font-weight: bold;
+        font-weight: 500;
         font-size: 1.1rem;
+        width: 100%;
+
+        .number {
+            display: block;
+            height: 1.5rem;
+        }
 
         input {
           margin-left: 0.75rem;
@@ -283,6 +337,7 @@ export default {
             position: absolute;
             left: 0;
             top: 0;
+            border-radius: 3px;
           }
 
           &:checked:before {
@@ -309,7 +364,6 @@ export default {
 
       .set-opt {
         color: gray;
-        border-top: 1px solid gray;
       }
     }
   }
