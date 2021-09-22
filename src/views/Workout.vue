@@ -78,6 +78,7 @@
 
 <script>
 import squat from "../assets/squat.jpeg";
+import mobility from "../assets/mobility.jpeg";
 import glute from "../assets/hip-thrust.png";
 import lunge from "../assets/lunge.gif";
 import legCurl from "../assets/leg-curl.png";
@@ -89,6 +90,7 @@ import row from "../assets/row.jpeg";
 import plank from "../assets/plank.jpeg";
 import backex from "../assets/backex.jpeg";
 import shoulder from "../assets/shoulder.png";
+import core from "../assets/Elasticcore.png"
 
 export default {
   name: "Workout",
@@ -105,7 +107,29 @@ export default {
       type: "legs",
       legs: [
         {
-          title: "Hack squat",
+          title: "Warmup treadmill",
+          set: {
+            req: 1,
+            opt: 0,
+            time: "10min",
+          },
+          weight: null,
+          break: null,
+          img: treadmill,
+        },
+        {
+          title: "Mobility",
+          set: {
+            req: 1,
+            opt: 0,
+            time: "5min",
+          },
+          weight: null,
+          break: null,
+          img: mobility,
+        },
+        {
+          title: "Pendulum squat",
           set: {
             req: 3,
             opt: 1,
@@ -149,17 +173,6 @@ export default {
           img: legCurl,
         },
         {
-          title: "Stair master",
-          set: {
-            req: 1,
-            opt: null,
-            time: "10min",
-          },
-          weight: null,
-          break: null,
-          img: stair,
-        },
-        {
           title: "Treadmill",
           set: {
             req: 1,
@@ -184,6 +197,28 @@ export default {
       ],
       ub: [
         {
+          title: "Warmup treadmill",
+          set: {
+            req: 1,
+            opt: 0,
+            time: "10min",
+          },
+          weight: null,
+          break: null,
+          img: treadmill,
+        },
+        {
+          title: "Mobility",
+          set: {
+            req: 1,
+            opt: 0,
+            time: "5min",
+          },
+          weight: null,
+          break: null,
+          img: mobility,
+        },
+        {
           title: "Chest press (or bench press 5kg)",
           set: {
             req: 4,
@@ -201,7 +236,7 @@ export default {
             opt: 0,
             rep: 10,
           },
-          weight: 20,
+          weight: 25,
           break: 90,
           img: row,
         },
@@ -222,7 +257,7 @@ export default {
           set: {
             req: 3,
             opt: 0,
-            rep: 6,
+            rep: 8,
           },
           weight: null,
           break: 90,
@@ -260,6 +295,63 @@ export default {
           weight: null,
           break: null,
           img: roll,
+        },
+      ],
+      cardio: [
+        {
+          title: "Warmup treadmill",
+          set: {
+            req: 1,
+            opt: 0,
+            time: "10min",
+          },
+          weight: null,
+          break: null,
+          img: treadmill,
+        },
+        {
+          title: "Mobility",
+          set: {
+            req: 1,
+            opt: 0,
+            time: "5min",
+          },
+          weight: null,
+          break: null,
+          img: mobility,
+        },
+        {
+          title: "Elastic core",
+          set: {
+            req: 3,
+            opt: 0,
+            rep: 15,
+          },
+          weight: null,
+          break: 90,
+          img: core,
+        },
+        {
+          title: "Stair master",
+          set: {
+            req: 1,
+            opt: null,
+            time: "4min",
+          },
+          weight: null,
+          break: null,
+          img: stair,
+        },
+        {
+          title: "Treadmill",
+          set: {
+            req: 1,
+            opt: 0,
+            time: "10min",
+          },
+          weight: null,
+          break: null,
+          img: treadmill,
         },
       ],
       workout: null,

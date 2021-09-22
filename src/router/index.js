@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 import Home from "../views/Home";
 import Stats from "../views/Stats";
 import Workout from "../views/Workout";
+import NewW from "../views/NewW";
+import Info from "../views/Info";
 
 Vue.use(VueRouter);
 
@@ -16,6 +18,16 @@ const routes = [
     path: "/stats",
     name: "Stats",
     component: Stats,
+  },
+  {
+    path: "/new",
+    name: "New workout",
+    component: NewW,
+  },
+  {
+    path: "/info",
+    name: "Info",
+    component: Info,
   },
   {
     path: "/workout/:type",

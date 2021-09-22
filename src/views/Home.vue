@@ -5,10 +5,10 @@
 
     <ul class="workouts">
       <router-link to="/workout/legs" class="workout" role="list"
-        ><i :class="'icon fas fa-socks'"></i>Legs</router-link
+        ><i :class="'icon fas fa-check-double'"></i>Legs</router-link
       >
       <router-link to="/workout/ub" class="workout" role="list"
-        ><i :class="'icon fas fa-hand-rock'"></i>Arms</router-link
+        ><i :class="'icon fas fa-hand-paper'"></i>Arms</router-link
       >
       <router-link to="/workout/cardio" class="workout" role="list">
         <i :class="'icon fas fa-walking'"></i> Cardio</router-link
@@ -37,6 +37,7 @@ export default {
   justify-content: space-between;
   overflow: hidden;
   margin-bottom: 4.5rem;
+   height: 90vh;
 
   time {
     color: rgb(65, 65, 71);
@@ -48,8 +49,9 @@ export default {
     padding: 0;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     width: 100%;
-    margin-bottom: 4rem;
+    height: 100%;
 
     .workout {
       list-style: none;
@@ -57,12 +59,13 @@ export default {
       padding: 1.5rem;
       width: 100%;
       text-align: left;
-      font-weight: 500;
       color: white;
       font-size: 1.1rem;
       background-color: rgb(21, 21, 22);
       margin-bottom: 1px;
-      height: 4.5rem;
+      height: 30%;
+      display: flex;
+      align-items: center;
 
       &:hover {
         cursor: pointer;
@@ -73,8 +76,9 @@ export default {
       }
 
       .icon {
-        font-size: 1.25rem;
-        margin-right: 1.5rem;
+        font-size: .9rem;
+        margin-right: .75rem;
+        opacity: .7;
       }
     }
   }

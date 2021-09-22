@@ -1,18 +1,18 @@
 <template>
-  <div class="stats">
-    <h2 class="heading">Stats</h2>
+  <div class="info">
+    <h2 class="heading">Info</h2>
     WIP
   </div>
 </template>
 
 <script>
 export default {
-  name: "Stats",
+  name: "Info",
 };
 </script>
 
 <style scoped lang="scss">
-.stats {
+.info {
   padding: 1rem;
   display: flex;
   flex-direction: column;
