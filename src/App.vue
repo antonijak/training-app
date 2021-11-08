@@ -4,6 +4,8 @@
     <main>
       <router-view :key="$route.fullpath" />
     </main>
+
+    <p class="copyright">Copyright ©2021 Antonija Kasum</p>
   </div>
 </template>
 
@@ -51,6 +53,18 @@ export default {
         margin-bottom: 1.5rem;
       }
     }
+  }
+
+  .copyright {
+    display: block;
+    width: 100%;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    font-size: .8rem;
+    padding: .5rem;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.043);
   }
 }
 </style>

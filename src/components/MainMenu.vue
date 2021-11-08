@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 <template>
   <div class="main-menu">
-    <h1 class="main-menu__title">Train</h1>
+    <router-link to="/" class="main-menu__title" role="heading">Train</router-link>
     <ul class="links">
       <router-link
         v-for="item in links"
@@ -68,6 +68,10 @@ export default {
     @media (min-width: 768px) {
       display: block;
       color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      text-decoration: none;
+      
     }
   }
 
@@ -137,9 +141,10 @@ export default {
 
         @media (min-width: 768px) {
           margin-top: 0;
-          font-size: 0.9rem;
+          font-size: 0.8rem;
           display: block;
-           letter-spacing: 1px;
+           letter-spacing: 2px;
+           font-weight: 600;
         }
       }
 

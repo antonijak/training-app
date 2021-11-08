@@ -8,6 +8,7 @@
 export default {
   name: "CButton",
   props: {
+    submit: Boolean
   },
 };
 </script>

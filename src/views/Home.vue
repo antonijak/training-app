@@ -3,25 +3,23 @@
     <h2 class="heading">Hello</h2>
     <time>{{ today }}</time>
 
-  
-
     <div class="home__image">
-        <ul class="workouts">
-      <router-link to="/workout/legs" class="workout" role="list">
-        <i :class="'icon fas fa-check-double'"></i>
-        Legs
-      </router-link>
+      <ul class="workouts">
+        <router-link to="/workout/legs" class="workout" role="list">
+          <i :class="'icon fas fa-check-double'"></i>
+          Legs
+        </router-link>
 
-      <router-link to="/workout/ub" class="workout" role="list">
-        <i :class="'icon fas fa-hand-paper'"></i>
-        Arms
-      </router-link>
+        <router-link to="/workout/ub" class="workout" role="list">
+          <i :class="'icon fas fa-hand-paper'"></i>
+          Arms
+        </router-link>
 
-      <router-link to="/workout/cardio" class="workout" role="list">
-        <i :class="'icon fas fa-walking'"></i>
-        Cardio
-      </router-link>
-    </ul>
+        <router-link to="/workout/cardio" class="workout" role="list">
+          <i :class="'icon fas fa-walking'"></i>
+          Cardio
+        </router-link>
+      </ul>
     </div>
   </div>
 </template>
@@ -49,8 +47,12 @@ export default {
 
   @media (min-width: 768px) {
     margin-bottom: 0;
-  min-height: 100vh;
+    min-height: 100vh;
     justify-content: space-between;
+    background-image: url("../assets/shoulder.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 
     .heading {
       display: none;
@@ -59,13 +61,12 @@ export default {
   }
 
   &__image {
-    background-image: url("../assets/shoulder.png");
-    background-repeat: no-repeat;
-    height: 85vh;
-    width: 100%;
-    background-size: cover;
-
-    padding-top: 3rem;
+    @media (min-width: 768px) {
+      height: 95vh;
+      width: 100%;
+      background-size: cover;
+      padding-top: 3rem;
+    }
   }
 
   time {
@@ -75,6 +76,9 @@ export default {
 
     @media (min-width: 768px) {
       margin-top: 3rem;
+    //  background: rgba(255, 255, 255, 0.912);
+      padding: 3rem 1.5rem;
+      margin-top: 0;
     }
   }
 
@@ -118,6 +122,7 @@ export default {
         min-width: 10rem;
         justify-content: center;
         color: white;
+      background: rgba(255, 255, 255, 0.132);
       }
 
       &:first-child {

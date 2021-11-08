@@ -485,6 +485,10 @@ export default {
 
           @media(min-width: 768px){
             background-color: rgba(255, 255, 255, 0.721);
+            width: 27%;
+            height: 100%;
+            border-radius: 0;
+            font-size: 2.5rem;
           }
         }
 
