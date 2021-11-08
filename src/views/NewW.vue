@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import CButton from '../components/CButton.vue';
+import CButton from "../components/CButton.vue";
 import CInput from '../components/CInput.vue';
 export default {
   components: { CInput, CButton },

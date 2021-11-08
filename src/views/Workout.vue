@@ -4,72 +4,104 @@
 
     <ul class="wo">
       <!-------------------------- S T E P -------------------------->
-      <li v-for="step in workout" :key="step.title" class="step">
+      <li
+        v-for="step in workout"
+        :key="step.title"
+        class="step"
+        :class="{
+          completed: completed.some((item) => item.title === step.title),
+        }"
+      >
         <!-------------------------- I M A G E -------------------------->
         <img class="image" :src="step.img" />
 
         <!-------------------------- T I T L E -------------------------->
-        <div class="step__heading">
-          <h3 class="title">
-            {{ step.title }}
-          </h3>
-        </div>
+        <div class="step__text">
+          <div class="step__info">
+            <div class="step__info__heading">
+              <h3 class="title">
+                {{ step.title }}
+              </h3>
+            </div>
 
-        <div v-if="step.break || step.weight" class="step__details">
-          <!-------------------------- B R E A K -------------------------->
-          <div v-if="step.break" class="break">
-            <i :class="'icon far fa-pause-circle'"></i> {{ step.break }} sec
+            <!-------------------------- D E T A I L S-------------------------->
+            <div v-if="step.break || step.weight" class="step__info__details">
+              <!-------------------------- B R E A K -------------------------->
+              <div v-if="step.break" class="break">
+                <i :class="'icon far fa-pause-circle'"></i> {{ step.break }} sec
+              </div>
+
+              <!-------------------------- W E I G H T -------------------------->
+              <div v-if="step.weight" class="weight">
+                <i :class="'icon fas fa-weight-hanging'"></i>
+                {{ step.weight }} kg
+              </div>
+            </div>
+
+            <!-------------------------- D E S C R I P T I O N-------------------------->
+
+            <p class="step__info__description">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec
+              tellus mattis, elementum sapien eleifend, aliquam leo. Sed ut ante
+              dui. Etiam dignissim risus non pharetra mollis.
+            </p>
           </div>
 
-          <!-------------------------- W E I G H T -------------------------->
-          <div v-if="step.weight" class="weight">
-            <i :class="'icon fas fa-weight-hanging'"></i> {{ step.weight }} kg
+          <!-------------------------- R E P S -------------------------->
+          <div v-if="step.set.rep" class="step__reps">
+            <label
+              v-for="index in step.set.req"
+              :key="index + 'req'"
+              class="set"
+            >
+              <p v-if="step.set.rep > 1" class="number">{{ step.set.rep }}</p>
+              <p v-else class="number">{{ step.set.time }}</p>
+
+              <input
+                type="checkbox"
+                @click="
+                  (e) => startBreak(e, step, index, index === step.set.req)
+                "
+              />
+            </label>
+
+            <label
+              v-for="index in step.set.opt"
+              :key="index + 'opt'"
+              class="set-opt"
+              :for="step.set.req + index"
+            >
+              <p v-if="step.set.rep > 1" class="number">{{ step.set.rep }}</p>
+              <p v-else class="number">{{ step.set.time }}</p>
+
+              <input
+                type="checkbox"
+                @click="(e) => startBreak(e, step, step.set.req + index)"
+                :id="step.set.req + index"
+              />
+            </label>
           </div>
-        </div>
 
-        <!-------------------------- R E P S -------------------------->
-        <div v-if="step.set.rep" class="step__reps">
-          <label v-for="index in step.set.req" :key="index + 'req'" class="set">
-            <p v-if="step.set.rep > 1" class="number">{{ step.set.rep }}</p>
-            <p v-else class="number">{{ step.set.time }}</p>
+          <div v-else class="step__reps">
+            <label class="set">
+              {{ step.set.time }}
+              <input type="checkbox" />
+            </label>
 
-            <input type="checkbox" @click="(e) => startBreak(e, step, index)" />
-          </label>
+            <label
+              v-for="index in step.set.opt"
+              :key="index + 'opt'"
+              class="set-opt"
+            >
+              {{ step.set.rep }}
+              <input type="checkbox" @click="startBreak(step)" />
+            </label>
+          </div>
 
-          <label
-            v-for="index in step.set.opt"
-            :key="index + 'opt'"
-            class="set-opt"
-          >
-            <p v-if="step.set.rep > 1" class="number">{{ step.set.rep }}</p>
-            <p v-else class="number">{{ step.set.time }}</p>
-
-            <input
-              type="checkbox"
-              @click="(e) => startBreak(e, step, step.set.req + index)"
-            />
-          </label>
-        </div>
-
-        <div v-else class="step__reps">
-          <label class="set">
-            {{ step.set.time }}
-            <input type="checkbox" />
-          </label>
-
-          <label
-            v-for="index in step.set.opt"
-            :key="index + 'opt'"
-            class="set-opt"
-          >
-            {{ step.set.rep }}
-            <input type="checkbox" @click="startBreak(step)" />
-          </label>
-        </div>
-
-        <!-------------------------- T I M E R -------------------------->
-        <div v-if="visibleTimer === step.title" class="timer">
-          {{ time }}
+          <!-------------------------- T I M E R -------------------------->
+          <div v-if="visibleTimer === step.title" class="timer">
+            {{ time }}
+          </div>
         </div>
       </li>
     </ul>
@@ -90,7 +122,7 @@ import row from "../assets/row.jpeg";
 import plank from "../assets/plank.jpeg";
 import backex from "../assets/backex.jpeg";
 import shoulder from "../assets/shoulder.png";
-import core from "../assets/Elasticcore.png"
+import core from "../assets/Elasticcore.png";
 
 export default {
   name: "Workout",
@@ -103,6 +135,7 @@ export default {
       interval: null,
       visibleTimer: "",
       set: null,
+      completed: [],
       time: 0,
       type: "legs",
       legs: [
@@ -246,7 +279,7 @@ export default {
             req: 4,
             opt: null,
             time: "30sec",
-            rep: 1
+            rep: 1,
           },
           weight: null,
           break: 90,
@@ -268,9 +301,9 @@ export default {
           set: {
             req: 3,
             opt: null,
-            rep: 8
+            rep: 8,
           },
-          weight: 'bar 15',
+          weight: "bar 15",
           break: 90,
           img: shoulder,
         },
@@ -358,7 +391,7 @@ export default {
     };
   },
   methods: {
-    startBreak(event, step, set) {
+    startBreak(event, step, set, isLast) {
       if (
         !event.target.checked &&
         this.visibleTimer === step.title &&
@@ -373,6 +406,10 @@ export default {
         this.visibleTimer = step.title;
         this.set = set;
         this.interval = setInterval(this.runTime, 1000);
+      }
+      console.log(isLast);
+      if (isLast) {
+        this.completed = [...this.completed, step];
       }
     },
     runTime() {
@@ -397,6 +434,7 @@ export default {
     font-weight: 500;
     letter-spacing: 0.5px;
     margin-bottom: -1.5rem;
+    color: $primary-text;
   }
 
   .wo {
@@ -414,7 +452,42 @@ export default {
       margin: 1.5rem;
       border-radius: 10px;
       background-color: rgb(60, 58, 65);
-      padding-bottom: 1rem;
+
+      @media (min-width: 768px) {
+        flex-wrap: nowrap;
+        height: 30vh;
+        background-color: white;
+        border: 1px solid $main-border;
+        color: $primary-text;
+      }
+
+      &.completed {
+        &:before {
+          width: 100%;
+          height: 9rem;
+          border-radius: 10px;
+          position: absolute;
+          left: 0;
+          top: 0;
+          background-color: rgba(63, 63, 63, 0.899);
+          z-index: 1;
+          content: "COMPLETED";
+          display: flex;
+          text-align: center;
+          padding: 4rem 1.5rem;
+          font-size: 3rem;
+          font-style: 600;
+          color: $green-icon;
+
+          @media(min-width: 768px){
+            background-color: rgba(255, 255, 255, 0.721);
+          }
+        }
+
+        &:after {
+        
+        }
+      }
 
       .image {
         width: 100%;
@@ -422,52 +495,100 @@ export default {
         object-fit: cover;
         opacity: 0.7;
         background-color: rgb(37, 37, 40);
-      }
 
-      &__heading {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        padding: 0.75rem 1rem 0;
-
-        .title {
-          width: fit-content;
-          font-size: 1.75rem;
-          font-family: Urbanist, sans-serif;
-          font-weight: 500;
+        @media (min-width: 768px) {
+          width: 30%;
+          height: 100%;
+          opacity: 1;
         }
       }
 
-      &__details {
+      &__text {
         width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-        color: rgb(194, 195, 201);
-        font-size: 0.9rem;
-        padding: 0.25rem 1rem 0;
-        font-weight: normal;
 
-        .break {
-          width: fit-content;
-          margin-right: 1.5rem;
-        }
-
-        .weight {
+        @media (min-width: 768px) {
+          width: calc(70% - 1.5rem);
+          height: 100%;
           display: flex;
-          width: fit-content;
-          align-items: center;
-
-          .icon {
-            font-size: 0.8rem;
-            margin-right: 0.3rem;
-          }
+          flex-direction: column;
+          justify-content: space-between;
         }
 
-        .icon {
-          margin-right: 0.25rem;
+        .step__info {
+          &__heading {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 0.75rem 1rem 0;
+
+            @media (min-width: 768px) {
+              padding: 0.75rem 1rem 1rem 0;
+            }
+
+            .title {
+              width: fit-content;
+              font-size: 1.75rem;
+              font-family: Urbanist, sans-serif;
+              font-weight: 500;
+
+              @media (min-width: 768px) {
+                font-size: 1.25rem;
+              }
+            }
+          }
+
+          &__description {
+            padding: 1rem;
+            display: block;
+            width: 100%;
+            color: $secondary-text;
+
+            @media (min-width: 768px) {
+              padding: 0;
+              width: calc(100% - 1rem);
+            }
+          }
+
+          &__details {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: rgb(194, 195, 201);
+            font-size: 0.9rem;
+            padding: 0.25rem 1rem 0;
+            font-weight: normal;
+
+            @media (min-width: 768px) {
+              padding: 0 0 1rem;
+              width: calc(100% - 1rem);
+              justify-content: flex-start;
+              color: $secondary-text;
+              margin-bottom: 0;
+            }
+
+            .break {
+              width: fit-content;
+              margin-right: 1rem;
+            }
+
+            .weight {
+              display: flex;
+              width: fit-content;
+              align-items: center;
+
+              .icon {
+                font-size: 0.8rem;
+                margin-right: 0.3rem;
+              }
+            }
+
+            .icon {
+              margin-right: 0.25rem;
+            }
+          }
         }
       }
 
@@ -490,11 +611,19 @@ export default {
 
       &__reps {
         width: 100%;
-        margin: 0 1rem 0;
+
         //   border-top: 1px solid rgb(80, 78, 84);
         background-color: rgb(66, 64, 72);
-        border-radius: 10px;
+
         padding: 1.5rem 1rem;
+
+        @media (min-width: 768px) {
+          background-color: white;
+          margin-left: 0;
+          height: fit-content;
+          display: flex;
+          align-items: flex-end;
+        }
 
         .set,
         .set-opt {
@@ -506,10 +635,20 @@ export default {
           font-size: 1.1rem;
           width: 100%;
 
+          @media (min-width: 768px) {
+            flex-direction: row-reverse;
+            justify-content: flex-start;
+            width: 100%;
+          }
+
+      
+
           &:first-child {
             margin-top: 0;
           }
-
+          &:hover {
+            cursor: pointer;
+          }
           .number {
             display: block;
             height: 1.5rem;
@@ -523,6 +662,15 @@ export default {
             height: 1.25rem;
             width: 1.25rem;
 
+            @media (min-width: 768px) {
+              margin-right: 0.5rem;
+              margin-left: 0;
+            }
+
+            &:hover {
+              cursor: pointer;
+            }
+
             &:before {
               visibility: visible;
               content: "";
@@ -534,6 +682,10 @@ export default {
               left: 0;
               top: 0;
               border-radius: 3px;
+
+              @media (min-width: 768px) {
+                border: 1px solid $input-border;
+              }
             }
 
             &:checked:before {
@@ -542,25 +694,33 @@ export default {
 
             &:checked:after {
               visibility: visible;
-              content: "\2715";
+              content: "\2714";
               height: 1rem;
               width: 1rem;
               position: absolute;
               left: 0;
-              background-color: rgb(13, 99, 40);
+              background-color: rgb(66, 64, 72);
               color: white;
               font-size: 1rem;
               line-height: 1rem;
               display: block;
               top: 0;
               text-align: center;
-              border-radius: 3px;
+              height: 18px;
+              width: 18px;
+              padding-top: 2px;
+              color: $green-icon;
+
+              @media (min-width: 768px) {
+                background-color: white;
+              }
             }
           }
         }
 
         .set-opt {
           color: gray;
+          z-index: 10;
         }
       }
     }

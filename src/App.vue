@@ -1,10 +1,11 @@
 <template>
   <div id="app">
+      <main-menu></main-menu>
     <main>
       <router-view :key="$route.fullpath" />
     </main>
 
-    <main-menu></main-menu>
+  
   </div>
 </template>
 
@@ -29,9 +30,9 @@ export default {
 #app {
   font-family: Urbanist, Open Sans, Arial, sans-serif;
 
-  color: white;
+  color: $primary-text;
   margin: 0;
-  background-color: rgb(35, 35, 39);
+  background-color: white;
   min-height: 100vh;
   overflow: hidden;
 
