@@ -435,6 +435,10 @@ export default {
     letter-spacing: 0.5px;
     margin-bottom: -1.5rem;
     color: $primary-text;
+
+    @media(min-width: 768px){
+      background-color: rgb(43, 42, 42);
+    }
   }
 
   .wo {

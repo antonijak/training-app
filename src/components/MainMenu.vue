@@ -67,6 +67,7 @@ export default {
 
     @media (min-width: 768px) {
       display: block;
+      color: white;
     }
   }
 
@@ -90,6 +91,7 @@ export default {
     @media (min-width: 768px) {
       width: fit-content;
       flex-direction: row;
+    
     }
 
     .link {
@@ -109,6 +111,7 @@ export default {
         padding: 1rem 0.75rem;
         color: white;
         text-transform: uppercase;
+       
 
         &:last-child {
           padding-right: 2.25rem;
@@ -136,6 +139,7 @@ export default {
           margin-top: 0;
           font-size: 0.9rem;
           display: block;
+           letter-spacing: 1px;
         }
       }
 

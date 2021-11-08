@@ -1,11 +1,9 @@
 <template>
   <div id="app">
-      <main-menu></main-menu>
+    <main-menu></main-menu>
     <main>
       <router-view :key="$route.fullpath" />
     </main>
-
-  
   </div>
 </template>
 
@@ -25,11 +23,10 @@ export default {
   box-sizing: border-box;
 }
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100;400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@100;400;500;700&display=swap");
 
 #app {
   font-family: Urbanist, Open Sans, Arial, sans-serif;
-
   color: $primary-text;
   margin: 0;
   background-color: white;
@@ -38,10 +35,21 @@ export default {
 
   main {
     min-height: calc(100vh - 4rem);
+    @media (min-width: 768px) {
+       min-height: 100vh;
+      }
 
     .heading {
       padding: 1.5rem;
       text-align: center;
+
+      @media (min-width: 768px) {
+        text-align: left;
+        font-size: 0.9rem;
+        padding: 0.5rem 1.5rem;
+        color: white;
+        margin-bottom: 1.5rem;
+      }
     }
   }
 }
