@@ -13,7 +13,6 @@ export default {
 
 <style scoped lang="scss">
 .info {
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;

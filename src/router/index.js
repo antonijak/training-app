@@ -1,10 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home";
-import Stats from "../views/Stats";
-import Workout from "../views/Workout";
-import NewW from "../views/NewW";
-import Info from "../views/Info";
+const Home = () => import("../views/Home");
+const Stats = () => import("../views/Stats");
+const Workout = () => import("../views/Workout");
+const NewWorkout = () => import("../views/NewWorkout");
+const Info = () => import("../views/Info");
 
 Vue.use(VueRouter);
 
@@ -22,7 +22,7 @@ const routes = [
   {
     path: "/new",
     name: "New workout",
-    component: NewW,
+    component: NewWorkout,
   },
   {
     path: "/info",
@@ -34,19 +34,16 @@ const routes = [
     name: "Workout",
     component: Workout,
   },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
 ];
 
 const router = new VueRouter({
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  console.log(to, from);
+  next();
+  // TODO check if user is authenticated etc.
 });
 
 export default router;

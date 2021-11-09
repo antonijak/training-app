@@ -44,15 +44,15 @@ export default {
   overflow: hidden;
   margin-bottom: 4.5rem;
   height: 90vh;
+  background-image: url("../assets/shoulder.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 
   @media (min-width: 768px) {
     margin-bottom: 0;
     min-height: 100vh;
     justify-content: space-between;
-    background-image: url("../assets/shoulder.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
 
     .heading {
       display: none;
@@ -70,13 +70,14 @@ export default {
   }
 
   time {
-    color: rgb(65, 65, 71);
+    color: white;
     text-align: center;
     margin-bottom: 3rem;
 
     @media (min-width: 768px) {
+      color: rgb(65, 65, 71);
       margin-top: 3rem;
-    //  background: rgba(255, 255, 255, 0.912);
+      //  background: rgba(255, 255, 255, 0.912);
       padding: 3rem 1.5rem;
       margin-top: 0;
     }
@@ -100,17 +101,18 @@ export default {
     .workout {
       list-style: none;
       text-decoration: none;
-      padding: 1.5rem;
+      padding: 2rem 1.5rem;
       width: 100%;
       text-align: left;
       color: $primary-text;
       font-size: 1.1rem;
       border-bottom: 1px solid $main-border;
       margin-bottom: 1px;
-      height: 30%;
       display: flex;
       align-items: center;
+      justify-content: center;
       transition: all 0.2s linear;
+      background: rgba(255, 255, 255, 0.577);
 
       @media (min-width: 768px) {
         width: fit-content;
@@ -118,11 +120,11 @@ export default {
         border: 1px solid $main-border;
         padding: 1.5rem 2rem;
         border-radius: 5px;
-        margin-left: 1.5rem;
+        margin-left: 3rem;
         min-width: 10rem;
         justify-content: center;
-        color: white;
-      background: rgba(255, 255, 255, 0.132);
+        color: $primary-text;
+      background: rgba(255, 255, 255, 0.262);
       }
 
       &:first-child {
@@ -134,7 +136,6 @@ export default {
 
       &:hover {
         cursor: pointer;
-        color: gray;
         transform: scale(1.1);
         background-color: white;
       }

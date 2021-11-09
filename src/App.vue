@@ -5,7 +5,9 @@
       <router-view :key="$route.fullpath" />
     </main>
 
-    <p class="copyright">Copyright ©2021 Antonija Kasum</p>
+    <p v-if="$route.name === 'Home'" class="copyright">
+      Copyright ©2021 Antonija Kasum
+    </p>
   </div>
 </template>
 
@@ -34,23 +36,30 @@ export default {
   background-color: white;
   min-height: 100vh;
   overflow: hidden;
+  padding-bottom: 4rem;
 
   main {
     min-height: calc(100vh - 4rem);
     @media (min-width: 768px) {
-       min-height: 100vh;
-      }
+      min-height: 100vh;
+    }
 
     .heading {
       padding: 1.5rem;
       text-align: center;
+      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      margin-bottom: -1.5rem;
+      color: $primary-text;
+      font-size: 0.9rem;
+      padding: 0.5rem 1.5rem;
+      color: white;
+      margin-bottom: 1.5rem;
+      background-color: rgb(43, 42, 42);
 
       @media (min-width: 768px) {
         text-align: left;
-        font-size: 0.9rem;
-        padding: 0.5rem 1.5rem;
-        color: white;
-        margin-bottom: 1.5rem;
       }
     }
   }
@@ -61,8 +70,8 @@ export default {
     color: white;
     position: fixed;
     bottom: 0;
-    font-size: .8rem;
-    padding: .5rem;
+    font-size: 0.8rem;
+    padding: 0.5rem;
     text-align: center;
     background: rgba(0, 0, 0, 0.043);
   }
